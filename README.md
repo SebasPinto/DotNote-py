@@ -11,6 +11,28 @@
 
 DotNote turns your Raspberry Pi and LED matrix into a customizable message display. Perfect for door signs, notifications, reminders, and creative projects. Control it from any device on your network through a simple web interface or API.
 
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Requirements](#-requirements)
+  - [Hardware](#hardware)
+  - [Software](#software)
+- [Wiring](#-wiring)
+  - [MAX7219 LED Matrix](#max7219-led-matrix)
+  - [Buzzer (Optional)](#buzzer-optional)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [API Usage](#-api-usage)
+  - [Update Message](#update-message)
+  - [Python Example](#python-example)
+- [Running as a Service](#-running-as-a-service)
+- [Usage Ideas](#-usage-ideas)
+- [Troubleshooting](#-troubleshooting)
+- [Project Structure](#-project-structure)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
+
 ## ✨ Features
 
 - 🌐 **Web-Based Control** - Update messages from any browser on your network
