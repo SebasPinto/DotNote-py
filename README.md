@@ -40,9 +40,17 @@ DotNote turns your Raspberry Pi and LED matrix into a customizable message displ
 - [Usage Ideas](#-usage-ideas)
 - [Troubleshooting](#-troubleshooting)
 - [Project Structure](#-project-structure)
+- [Project Links](#-project-links)
 - [Contributing](#-contributing)
 - [License](#-license)
 - [Acknowledgments](#-acknowledgments)
+
+## 🔗 Project Links
+
+- **GitHub Repository:** https://github.com/SebasPinto/DotNote-py
+- **3D Printable Case (MakerWorld):** https://makerworld.com/en/models/1947147-dotnote-led-matrix-case
+- **3D Printable Case (Printables):** https://www.printables.com/model/1466398-dotnote-led-matrix-case
+- **Complete Build Guide (Instructables):** https://www.instructables.com/DIY-LED-Matrix-Message-Display-With-Raspberry-Pi/
 
 ## ✨ Features
 
@@ -296,6 +304,13 @@ dotnote/
 │   └── index.html      # Web interface
 └── messages.log        # Message log (generated)
 ```
+
+## 🔗 Project Links
+
+- **GitHub Repository:** https://github.com/SebasPinto/DotNote-py
+- **3D Printable Case (MakerWorld):** https://makerworld.com/en/models/1947147-dotnote-led-matrix-case
+- **3D Printable Case (Printables):** https://www.printables.com/model/1466398-dotnote-led-matrix-case
+- **Complete Build Guide (Instructables):** https://www.instructables.com/DIY-LED-Matrix-Message-Display-With-Raspberry-Pi/
 
 ## 🤝 Contributing
 
