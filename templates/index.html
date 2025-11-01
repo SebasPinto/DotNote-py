@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DotNote - LED Matrix Display</title>
+    <style>
+        /* ====================================================================
+           CUSTOMIZATION VARIABLES - Edit these to change the theme
+           ==================================================================== */
+        :root {
+            /* Colors - Clean LED Display Theme */
+            --primary-red: #ff0000;          /* Bright red (LED on) */
+            --secondary-red: #cc0000;        /* Darker red */
+            --dark-red: #990000;             /* Very dark red */
+            --background: #000000;           /* Pure black (LED off) */
+            --card-background: #0d0d0d;      /* Slightly lighter black */
+            --text-primary: #ffffff;         /* White text */
+            --text-secondary: #999999;       /* Gray text */
+            --border-color: #1a1a1a;         /* Subtle border */
+            --success-bg: rgba(255, 0, 0, 0.1);
+            --error-bg: rgba(255, 165, 0, 0.1);
+            --error-color: #ff8800;
+            
+            /* Spacing */
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 20px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+        }
+        
+        /* ====================================================================
+           GLOBAL STYLES
+           ==================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-md);
+            line-height: 1.6;
+        }
+        
+        /* ====================================================================
+           CONTAINER
+           ==================================================================== */
+        .container {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* ====================================================================
+           HEADER
+           ==================================================================== */
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        h1 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: var(--spacing-xs);
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        /* ====================================================================
+           FORM ELEMENTS
+           ==================================================================== */
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-sm);
+            background: var(--background);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1em;
+            font-family: inherit;
+            transition: all var(--transition-normal);
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+        }
+        
+        input[type="text"]::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        /* ====================================================================
+           BUTTON
+           ==================================================================== */
+        button {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--primary-red);
+            color: var(--text-primary);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1em;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            background: var(--secondary-red);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(255, 0, 0, 0.2);
+        }
+        
+        button:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* ====================================================================
+           STATUS MESSAGES
+           ==================================================================== */
+        .status {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-size: 0.9em;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .status.success {
+            background: var(--success-bg);
+            color: var(--primary-red);
+            border: 1px solid var(--primary-red);
+        }
+        
+        .status.error {
+            background: var(--error-bg);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+        
+        /* ====================================================================
+           FOOTER
+           ==================================================================== */
+        .footer {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85em;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer a:hover {
+            color: var(--primary-red);
+        }
+        
+        /* ====================================================================
+           ANIMATIONS
+           ==================================================================== */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ====================================================================
+           RESPONSIVE DESIGN
+           ==================================================================== */
+        @media (max-width: 600px) {
+            .container {
+                padding: var(--spacing-md);
+            }
+            
+            h1 {
+                font-size: 1.75em;
+            }
+            
+            .subtitle {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DotNote</h1>
+            <p class="subtitle">LED Matrix Message Display</p>
+        </div>
+        
+        <form id="messageForm">
+            <div class="form-group">
+                <label for="message">Message</label>
+                <input 
+                    type="text" 
+                    id="message" 
+                    name="message" 
+                    placeholder="Enter your message..."
+                    required
+                    maxlength="200"
+                    autocomplete="off"
+                >
+            </div>
+            
+            <button type="submit" id="submitBtn">Update Display</button>
+        </form>
+        
+        <div class="status" id="status"></div>
+        
+        <div class="footer">
+            <a href="https://github.com/SebasPinto/DotNote-py" target="_blank" rel="noopener">github.com/SebasPinto/DotNote-py</a>
+        </div>
+    </div>
+    
+    <script>
+        // Show status message
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status ' + type;
+            statusDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Handle form submission
+        document.getElementById('messageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const messageInput = document.getElementById('message');
+            const submitBtn = document.getElementById('submitBtn');
+            const message = messageInput.value.trim();
+            
+            if (!message) {
+                showStatus('Please enter a message', 'error');
+                return;
+            }
+            
+            // Disable button during request
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Updating...';
+            
+            try {
+                const response = await fetch('/update?message=' + encodeURIComponent(message));
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showStatus('Message updated successfully', 'success');
+                    messageInput.value = '';
+                } else {
+                    showStatus(data.error || 'Error updating message', 'error');
+                }
+            } catch (error) {
+                showStatus('Connection error', 'error');
+                console.error('Error:', error);
+            } finally {
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Update Display';
+            }
+        });
+    </script>
+</body>
+</html>
