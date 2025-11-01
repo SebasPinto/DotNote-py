@@ -11,8 +11,19 @@
 
 DotNote turns your Raspberry Pi and LED matrix into a customizable message display. Perfect for door signs, notifications, reminders, and creative projects. Control it from any device on your network through a simple web interface or API.
 
+## 🎬 Demo
+
+<p align="center">
+  <img src="docs/assets/demo-ui.png" alt="DotNote web interface" width="700">
+</p>
+
+<p align="center">
+  <img src="docs/assets/demo.gif" alt="DotNote in action" width="700">
+</p>
+
 ## 📑 Table of Contents
 
+- [Demo](#-demo)
 - [Features](#-features)
 - [Requirements](#-requirements)
   - [Hardware](#hardware)
